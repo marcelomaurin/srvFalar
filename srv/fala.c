@@ -10,18 +10,7 @@ Data: 30/01/2014
 #include<unistd.h>    //write
 #include <espeak/speak_lib.h>
 
-
-/*
-void Falar( char * Info)
-{
-   char buff[1000];
-   sprintf(buff,"/projetos/robotinics/espeak/falar.sh %s",Info);
-   //printf(buff);   
-   system(buff);
-}
-
-https://github.com/mondhs/espeak-sample/blob/master/sampleSpeak.cpp
-*/
+#define PORTSRV 7091
 
 espeak_AUDIO_OUTPUT output;
 
@@ -76,7 +65,7 @@ int main(int argc , char *argv[])
     //Prepare the sockaddr_in structure
     server.sin_family = AF_INET;
     server.sin_addr.s_addr = INADDR_ANY;
-    server.sin_port = htons( 7091 );
+    server.sin_port = htons( PORTSRV );
      
     //Bind
     if( bind(socket_desc,(struct sockaddr *)&server , sizeof(server)) < 0)
@@ -105,7 +94,7 @@ int main(int argc , char *argv[])
         return 1;
     }
     puts("Connection accepted");
-     
+    memset(client_message,'\0',sizeof(client_message));
     //Receive a message from client
     while( (read_size = recv(client_sock , client_message , 2000 , 0)) > 0 )
     {
