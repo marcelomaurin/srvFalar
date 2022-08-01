@@ -1,0 +1,8 @@
+[Unit]
+Description=srvfalar
+
+[Service]
+ExecStart=/usr/bin/srvfalar
+
+[Install]
+WantedBy=multi-user.target
