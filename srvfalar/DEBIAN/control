@@ -1,6 +1,6 @@
 Package: srvfalar
 Version: 1.0
-Depends:  mysql-common, espeak
+Depends:  mysql-common, espeak, espeak-data, libespeak-dev
 Section: eletronic
 Priority: optional
 Architecture: all

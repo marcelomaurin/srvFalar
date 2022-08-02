@@ -1,6 +1,6 @@
 #!/bin/bash
 ARQUITETURA=$(uname -m)
-VERSAO=1.1
+VERSAO=1.0
 
 case $(uname -m) in
 	i386) 	ARQUITETURA="i386";;
@@ -15,7 +15,7 @@ if [ $ARQUITETURA = 'amd64' ];
 then
 	echo "AMD64 Script"
 	echo "Preparando binarios"
-	cp ./src/srvmonitor2 ./srvfalar/usr/bin/srvfalar
+	cp ./src/srvfalar ./srvfalar/usr/bin/srvfalar
 	chmod 777 ./srvfalar/usr/bin/srvfalar
 	#cp ./src/srvfalar.png ./srvfalar/usr/share/icons/hicolor/srvfalar.png
 	#cp ./srvfalar.desktop_arm ./srvfalar/usr/share/applications/srvfalar.desktop

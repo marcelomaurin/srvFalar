@@ -12,8 +12,8 @@ compile:
 	gcc  $(SOURCE) $(MYESPEAK) -o $(TARGET)
 
 install:
-	cp  $(TARGET) /usr/local/bin/ 
-
+	cp  $(TARGET) /usr/bin/ 
+	cp $(TARGET) ./../srvfalar/usr/bin/
 clean:
 	-rm -f $(TARGET)
 
