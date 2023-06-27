@@ -1,0 +1,105 @@
+object frmMain: TfrmMain
+  Left = 238
+  Height = 130
+  Top = 145
+  Width = 404
+  Caption = 'test of subprotocol fala - robotinics'
+  ClientHeight = 130
+  ClientWidth = 404
+  LCLVersion = '2.2.6.0'
+  object btFalar: TButton
+    Left = 296
+    Height = 25
+    Top = 93
+    Width = 75
+    Caption = 'Speak'
+    OnClick = btFalarClick
+    TabOrder = 0
+  end
+  object Shape1: TShape
+    Left = 0
+    Height = 72
+    Top = 0
+    Width = 404
+    Align = alTop
+  end
+  object Label1: TLabel
+    Left = 8
+    Height = 15
+    Top = 6
+    Width = 13
+    Caption = 'IP:'
+    ParentColor = False
+  end
+  object edIP: TEdit
+    Left = 27
+    Height = 23
+    Top = 3
+    Width = 192
+    TabOrder = 1
+    Text = '127.0.0.1'
+  end
+  object Label2: TLabel
+    Left = 240
+    Height = 15
+    Top = 3
+    Width = 25
+    Caption = 'Port:'
+    ParentColor = False
+  end
+  object edPort: TEdit
+    Left = 273
+    Height = 23
+    Top = 3
+    Width = 80
+    OnChange = edPortChange
+    TabOrder = 2
+    Text = '8096'
+  end
+  object btConect: TButton
+    Left = 176
+    Height = 25
+    Top = 40
+    Width = 75
+    Caption = 'Conect'
+    OnClick = btConectClick
+    TabOrder = 3
+  end
+  object btDisconect: TButton
+    Left = 264
+    Height = 25
+    Top = 40
+    Width = 75
+    Caption = 'Disconect'
+    OnClick = btDisconectClick
+    TabOrder = 4
+  end
+  object Label3: TLabel
+    Left = 10
+    Height = 15
+    Top = 78
+    Width = 34
+    Caption = 'Speak:'
+    ParentColor = False
+  end
+  object edFalar: TEdit
+    Left = 8
+    Height = 23
+    Top = 95
+    Width = 280
+    TabOrder = 5
+    Text = 'Eu sou o Robotinics estou testando as funções de fala!'
+  end
+  object LTCPComponent1: TLTCPComponent
+    Host = '192.168.0.6'
+    Port = 7091
+    OnReceive = LTCPComponent1Receive
+    OnError = LTCPComponent1Error
+    OnDisconnect = LTCPComponent1Disconnect
+    OnConnect = LTCPComponent1Connect
+    Timeout = 0
+    ReuseAddress = True
+    Left = 346
+    Top = 25
+  end
+end

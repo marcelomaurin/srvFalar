@@ -59,7 +59,7 @@ end;
 
 procedure TfrmMain.btFalarClick(Sender: TObject);
 begin
-  LTCPComponent1.SendMessage(edFalar.text+#10,nil);
+  LTCPComponent1.SendMessage(edFalar.text,nil);
 
 end;
 

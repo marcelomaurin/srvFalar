@@ -6,7 +6,7 @@ object frmMain: TfrmMain
   Caption = 'test of subprotocol fala - robotinics'
   ClientHeight = 130
   ClientWidth = 404
-  LCLVersion = '1.0.14.0'
+  LCLVersion = '2.2.2.0'
   object btFalar: TButton
     Left = 296
     Height = 25
@@ -25,9 +25,9 @@ object frmMain: TfrmMain
   end
   object Label1: TLabel
     Left = 8
-    Height = 16
+    Height = 15
     Top = 6
-    Width = 14
+    Width = 13
     Caption = 'IP:'
     ParentColor = False
   end
@@ -37,13 +37,13 @@ object frmMain: TfrmMain
     Top = 3
     Width = 192
     TabOrder = 1
-    Text = '192.168.0.6'
+    Text = '127.0.0.1'
   end
   object Label2: TLabel
     Left = 240
-    Height = 16
+    Height = 15
     Top = 3
-    Width = 26
+    Width = 25
     Caption = 'Port:'
     ParentColor = False
   end
@@ -54,7 +54,7 @@ object frmMain: TfrmMain
     Width = 80
     OnChange = edPortChange
     TabOrder = 2
-    Text = '7091'
+    Text = '8096'
   end
   object btConect: TButton
     Left = 176
@@ -76,9 +76,9 @@ object frmMain: TfrmMain
   end
   object Label3: TLabel
     Left = 10
-    Height = 16
+    Height = 15
     Top = 78
-    Width = 35
+    Width = 34
     Caption = 'Speak:'
     ParentColor = False
   end
@@ -99,7 +99,7 @@ object frmMain: TfrmMain
     OnConnect = LTCPComponent1Connect
     Timeout = 0
     ReuseAddress = True
-    left = 346
-    top = 25
+    Left = 346
+    Top = 25
   end
 end

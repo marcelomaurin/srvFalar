@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="/usr/bin/fpc" Date="1625802185"/>
+  <Params Value=" -MObjFPC -Scghi -Cg -O1 -gw3 -gl -l -vewnhibq -Fi/home/mmm/srvFalar/ToolFalar/src/lib/x86_64-linux -Fu/home/mmm/.lazarus/onlinepackagemanager/packages/lnet/lazaruspackage/lib/x86_64-linux -Fu/usr/share/lazarus/2.2.4/components/ideintf/units/x86_64-linux/gtk2 -Fu/usr/share/lazarus/2.2.4/components/lazcontrols/lib/x86_64-linux/gtk2 -Fu/usr/share/lazarus/2.2.4/lcl/units/x86_64-linux/gtk2 -Fu/usr/share/lazarus/2.2.4/lcl/units/x86_64-linux -Fu/usr/share/lazarus/2.2.4/components/freetype/lib/x86_64-linux -Fu/usr/share/lazarus/2.2.4/components/buildintf/units/x86_64-linux -Fu/usr/share/lazarus/2.2.4/components/lazutils/lib/x86_64-linux -Fu/usr/share/lazarus/2.2.4/packager/units/x86_64-linux -Fu/home/mmm/srvFalar/ToolFalar/src/ -FU/home/mmm/srvFalar/ToolFalar/src/lib/x86_64-linux/ -FE/home/mmm/srvFalar/ToolFalar/src/ -o/home/mmm/srvFalar/ToolFalar/src/ToolFalar -dLCL -dLCLgtk2 ToolFalar.lpr"/>
+</CONFIG>

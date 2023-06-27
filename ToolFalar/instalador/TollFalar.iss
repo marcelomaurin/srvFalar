@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "ToolFalar"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.1"
 #define MyAppPublisher "Maurinsoft"
 #define MyAppURL "http://maurinsoft.com.br"
 #define MyAppExeName "ToolFalar.exe"
@@ -19,9 +19,9 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
-DefaultDirName="D:\projetos\maurinsoft\srvFalar\bin\"
+DefaultDirName="C:\Users\marce\Documents\ToolFalar\"
 DisableProgramGroupPage=yes
-OutputBaseFilename=setup_toolfalar100
+OutputBaseFilename=setup_toolfalar101
 Compression=lzma
 SolidCompression=yes
 
