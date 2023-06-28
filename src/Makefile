@@ -9,7 +9,7 @@ default: all
 all: clean compile install
 
 compile:
-	gcc  $(SOURCE) $(MYESPEAK) -o $(TARGET)
+	gcc -g $(SOURCE) $(MYESPEAK) -o $(TARGET)
 
 install:
 	cp  $(TARGET) /usr/bin/ 

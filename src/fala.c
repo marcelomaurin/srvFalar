@@ -103,6 +103,7 @@ int main(int argc , char *argv[])
         //write(client_sock , client_message , strlen(client_message));
         //printf(client_message);
         Ler(client_message);
+	memset(client_message,'\0',sizeof(client_message));
     }
      
     if(read_size == 0)
