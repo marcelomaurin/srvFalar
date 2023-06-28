@@ -8,7 +8,7 @@ Este serviço simula a fala, e pode ser instalado em equipamentos embarcados, de
 
 Este serviço permite a sintetização de voz, sem recorrer a nenhum servidor externo.
 
-Para maiores informações acesse http://maurinsoft.com.br
+Para maiores informações acesse https://maurinsoft.com.br
 
 # English
 
