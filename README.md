@@ -1,23 +1,60 @@
 # Portuguese
 
-srvFalar - É um serviço escrito em C, baseado na biblioteca espeak, que fala no idioma portugues ou ingles.
+Objetivo:
+Permitir criar um serviço de sintetização de voz.
 
-Possui tambem um cliente para testes, que permite a integração com o serviço.
+Instalação:
+Instale o pacote mais atual, com o seguinte comando:
+> sudo apt install ./srvfalar-1.2_amd64.deb
+Caso exista versão mais nova, use-a.
 
-Este serviço simula a fala, e pode ser instalado em equipamentos embarcados, desconectados da internet.
+Ferramentas de utilização:
+Existe uma aplicação desk top, WINDOWS que permite a simulação.
+O ToolFalar é uma aplicação cliente que envia dados de voz via porta 8096.
 
-Este serviço permite a sintetização de voz, sem recorrer a nenhum servidor externo.
+Enviando dados por aplicação própria:
+Conecte a aplicação cliente através de um socket, na porta 8096 , e envie os dados a serem ditos, com terminador ASCII 13.
 
-Para maiores informações acesse https://maurinsoft.com.br
+Duvidas ou Sugestões:
+marcelomaurinmartins@gmail.com
+
 
 # English
 
-srvFalar - It is a service written in C, based on the espeak library, which speaks in Portuguese or English.
+Goal:
+Allow to create a speech synthesis service.
 
-It also has a test client, which allows integration with the service.
+Installation:
+Install the most current package, with the following command:
+> sudo apt install ./srvfalar-1.2_amd64.deb
+If there is a newer version, use it.
 
-This service simulates speech, and can be installed on embedded devices, disconnected from the internet.
+Usage tools:
+There is a desk top application, WINDOWS that allows the simulation.
+ToolFalar is a client application that sends voice data via port 8096.
 
-This service allows voice synthesis, without resorting to any external server.
+Sending data by own application:
+Connect the client application through a socket, on port 8096, and send the data to be said, with ASCII terminator 13.
 
-For more informations, site: http://maurinsoft.com.br (portuguese documentation)
+Questions or Suggestions:
+marcelomaurinmartins@gmail.com
+
+# Spanish
+
+Meta:
+Permitir crear un servicio de síntesis de voz.
+
+Instalación:
+Instale el paquete más actual, con el siguiente comando:
+> sudo apt install ./srvfalar-1.2_amd64.deb
+Si hay una versión más nueva, úsela.
+
+Herramientas de uso:
+Existe una aplicación de escritorio, WINDOWS, que permite la simulación.
+ToolFalar es una aplicación cliente que envía datos de voz a través del puerto 8096.
+
+Envío de datos por aplicación propia:
+Conectar la aplicación cliente a través de un socket, en el puerto 8096, y enviar los datos a ser dicho, con terminador ASCII 13.
+
+Preguntas o Sugerencias:
+marcelomaurinmartins@gmail.com
