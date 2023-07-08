@@ -1,8 +1,12 @@
 [Unit]
-Description=srvfalar
+Description=Simulador de falar srvfalar
+After=network.target
 
 [Service]
 ExecStart=/usr/bin/srvfalar
+Restart=always
+User=root
+Group=root
 
 [Install]
 WantedBy=multi-user.target

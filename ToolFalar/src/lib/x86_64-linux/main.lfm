@@ -6,7 +6,7 @@ object frmMain: TfrmMain
   Caption = 'test of subprotocol fala - robotinics'
   ClientHeight = 130
   ClientWidth = 404
-  LCLVersion = '2.2.2.0'
+  LCLVersion = '2.2.6.0'
   object btFalar: TButton
     Left = 296
     Height = 25
