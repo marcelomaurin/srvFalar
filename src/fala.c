@@ -81,27 +81,26 @@ int Start_Voice()
 	//espeak_SetSynthCallback(SynthCallback);
 	espeak_Synchronize( );
 	//t_espeak_callback *SynthCallback;
-	return 0;
-	
+	return 0;	
 }
 #endif
 
 #ifdef _WIN32
-void controlesocket_windows32()
+int controlesocket_windows32()
 {
-
+  return 0;
 }
 #endif
 
 #ifdef _WIN64
-void controlesocket_windows64()
+int controlesocket_windows64()
 {
-
+  return 0;
 }
 #endif
 
 #ifdef _LINUX
-void controlesocket_linux()
+int controlesocket_linux()
 {
     //Create socket
     socket_desc = socket(AF_INET, SOCK_STREAM, 0);
@@ -188,3 +187,4 @@ int main(int argc , char *argv[])
 
     return 0;
 }
+
