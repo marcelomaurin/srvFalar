@@ -15,8 +15,17 @@ O ToolFalar é uma aplicação cliente que envia dados de voz via porta 8096.
 Enviando dados por aplicação própria:
 Conecte a aplicação cliente através de um socket, na porta 8096 , e envie os dados a serem ditos, com terminador ASCII 13.
 
+# Requisitos de compilação
+
+## UBUNTU
+sudo apt install espeak libespeak-dev
+
+
+
+
 Duvidas ou Sugestões:
 marcelomaurinmartins@gmail.com
+
 
 
 # English
