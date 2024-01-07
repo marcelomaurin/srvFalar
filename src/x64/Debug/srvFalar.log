@@ -1,0 +1,3 @@
+﻿  fala.c
+C:\Users\marcelo.maurin\Desktop\projetos\srvFalar\src\fala.c(56,5): error C2084: função 'int Start_Voice()' já possui um corpo
+C:\Users\marcelo.maurin\Desktop\projetos\srvFalar\src\fala.c(49,5): message : consulte a definição anterior de 'Start_Voice'
