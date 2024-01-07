@@ -11,6 +11,27 @@ esac
 
 echo $ARQUITETURA
 
+
+aarch64
+
+if [ $ARQUITETURA = 'aarch64' ];
+then
+	echo "AARCH64 Script"
+	echo "Preparando binarios"
+	cp ./src/srvfalar ./srvfalar/usr/bin/srvfalar
+	chmod 777 ./srvfakar/usr/bin/srvfalar
+
+	echo "Empacotando"
+	dpkg-deb --build srvfalar
+	echo "Movendo para pasta repositorio"
+	FILE=`echo "srvfalar-$VERSAO""_arc64.deb"`
+	echo $FILE
+	mv srvfalar.deb $FILE
+	cp $FILE ./bin/
+	exit 1;
+fi
+
+
 if [ $ARQUITETURA = 'amd64' ]; 
 then
 	echo "AMD64 Script"
