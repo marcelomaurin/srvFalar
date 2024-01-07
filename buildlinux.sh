@@ -24,7 +24,7 @@ then
 	echo "Empacotando"
 	dpkg-deb --build srvfalar
 	echo "Movendo para pasta repositorio"
-	FILE=`echo "srvfalar-$VERSAO""_arc64.deb"`
+	FILE=`echo "srvfalar-$VERSAO""_arm64.deb"`
 	echo $FILE
 	mv srvfalar.deb $FILE
 	cp $FILE ./bin/
