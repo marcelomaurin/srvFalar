@@ -6,11 +6,24 @@ Data: 30/01/2014
 #include<stdio.h>
 #include<string.h>    //strlen
 #ifdef _WIN32
+#include <winsock2.h>
+#include <stdlib.h>
+#include <string.h>
+#pragma comment(lib, "ws2_32.lib") // Esta linha é necessária para linkar a biblioteca ws2_32.lib com o programa
+
+
+// Protótipos das funções do eSpeak que serão usados
+typedef int (*espeakInitializeFunc)(int, int, const char*, int);
+typedef int (*espeakSetVoiceByNameFunc)(const char*);
+typedef const void* (*espeakGetCurrentVoiceFunc)(void);
+typedef int (*espeakSetVoiceByPropertiesFunc)(const void*);
+typedef int (*espeakSynchronizeFunc)(void);
 
 #endif
 
 #ifdef _WIN64
-
+#include <winsock2.h>
+#pragma comment(lib, "ws2_32.lib") // Esta linha é necessária para linkar a biblioteca ws2_32.lib com o programa,
 #endif
 
 #ifdef _LINUX
@@ -35,6 +48,28 @@ char client_message[2000];
 espeak_AUDIO_OUTPUT output;
 #endif
 
+#ifdef _WIN64
+void Ler(char* frase) {
+
+}
+#endif
+
+#ifdef _WIN32
+void Ler(char* frase) {
+    char command[1024];
+
+    // Constrói o comando para chamar a aplicação eSpeak com a frase
+    //c:\Program Files(x86)\eSpeak\command_line
+    snprintf(command, sizeof(command), "C:\\Program Files (x86)\\eSpeak\\command_line\\espeak.exe \"%s\"", frase);
+    printf(command);
+    // Executa o comando
+    int result = system(command);
+    if (result != 0) {
+        printf("Error executing espeak command\n");
+    }
+}
+#endif
+
 #ifdef _LINUX
 void Ler(char * frase) {
 	int speakErr =0;
@@ -46,8 +81,8 @@ void Ler(char * frase) {
 #endif
 
 #ifdef _WIN32
-int Start_Voice() 
-{
+int Start_Voice() {
+
     return 0;
 }
 #endif
@@ -86,9 +121,86 @@ int Start_Voice()
 #endif
 
 #ifdef _WIN32
-int controlesocket_windows32()
-{
-  return 0;
+int controlesocket_windows32() {
+    WSADATA wsa;
+    SOCKET socket_desc, client_sock;
+    struct sockaddr_in server, client;
+    int c, read_size;
+    char client_message[2000];
+
+    // Inicializa o subsistema de sockets do Windows
+    printf("\nInitialising Winsock...");
+    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
+        printf("Failed. Error Code : %d", WSAGetLastError());
+        return 1;
+}
+    printf("Initialised.\n");
+
+    // Cria o socket
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    if (socket_desc == INVALID_SOCKET) {
+        printf("Could not create socket : %d", WSAGetLastError());
+        WSACleanup();
+        return 1;
+    }
+    puts("Socket created");
+
+    // Prepara a estrutura sockaddr_in
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_port = htons(PORTSRV);
+
+    // Bind
+    if (bind(socket_desc, (struct sockaddr*)&server, sizeof(server)) == SOCKET_ERROR) {
+        printf("Bind failed with error code : %d", WSAGetLastError());
+        closesocket(socket_desc);
+        WSACleanup();
+        return 1;
+    }
+    puts("Bind done");
+
+    int flgAtivo = 1;
+    while (flgAtivo == 1) {
+        // Ouve por conexões
+        listen(socket_desc, 3);
+
+        // Aceita conexões entrantes
+        puts("Waiting for incoming connections...");
+        c = sizeof(struct sockaddr_in);
+
+        client_sock = accept(socket_desc, (struct sockaddr*)&client, &c);
+        if (client_sock == INVALID_SOCKET) {
+            printf("accept failed with error code : %d", WSAGetLastError());
+            closesocket(socket_desc);
+            WSACleanup();
+            return 1;
+        }
+        puts("Connection accepted");
+
+        memset(client_message, '\0', sizeof(client_message));
+
+        // Recebe mensagem do cliente
+        while ((read_size = recv(client_sock, client_message, 2000, 0)) > 0) {
+            // Processa a mensagem recebida
+            printf("%s\n", client_message);
+            Ler(client_message); // Supondo que Ler seja uma função definida por você
+            memset(client_message, '\0', sizeof(client_message));
+        }
+
+        if (read_size == 0) {
+            puts("Client disconnected");
+            fflush(stdout);
+        }
+        else if (read_size == -1) {
+            printf("recv failed with error code : %d", WSAGetLastError());
+        }
+
+        closesocket(client_sock);
+    }
+
+    closesocket(socket_desc);
+    WSACleanup(); // Limpa o subsistema de sockets
+    return 0;
 }
 #endif
 
