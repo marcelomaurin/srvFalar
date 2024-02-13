@@ -10,6 +10,8 @@ Data: 30/01/2014
 #include <winsock2.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
+#include <sapi.h>
 #pragma comment(lib, "ws2_32.lib") // Esta linha é necessária para linkar a biblioteca ws2_32.lib com o programa
 
 
@@ -56,6 +58,35 @@ void Ler(char* frase) {
 #endif
 
 #ifdef _WIN32
+void Ler_SAPI(char* frase) {
+    // Inicializar a COM
+    CoInitialize(NULL);
+
+    ISpVoice* pVoice = NULL;
+
+    // Criar uma instância da interface ISpVoice
+    CoCreateInstance(&CLSID_SpVoice, NULL, CLSCTX_ALL, &IID_ISpVoice, (void**)&pVoice);
+
+    // Converter a string para wide string (wchar_t*)
+    int wstr_size = MultiByteToWideChar(CP_UTF8, 0, frase, -1, NULL, 0);
+    wchar_t* wfrase = (wchar_t*)malloc(wstr_size * sizeof(wchar_t));
+    MultiByteToWideChar(CP_UTF8, 0, frase, -1, wfrase, wstr_size);
+
+    // Converter o texto para fala
+    pVoice->lpVtbl->Speak(pVoice, wfrase, 0, NULL);
+
+    // Aguardar a conclusão da fala
+    SPVOICESTATUS status;
+    pVoice->lpVtbl->GetStatus(pVoice, &status, NULL);
+    while (status.dwRunningState == SPRS_IS_SPEAKING) {
+        Sleep(100);
+        pVoice->lpVtbl->GetStatus(pVoice, &status, NULL);
+    }
+
+    // Liberar recursos
+    pVoice->lpVtbl->Release(pVoice);
+    CoUninitialize();
+}
 
 void Ler(char* frase) {
     char command[10000];
@@ -69,8 +100,6 @@ void Ler(char* frase) {
         printf("Erro ao executar o comando espeak\n");
     }
 }
-
-
 #endif
 
 #ifdef _LINUX
@@ -186,7 +215,8 @@ int controlesocket_windows32() {
         while ((read_size = recv(client_sock, client_message, 2000, 0)) > 0) {
             // Processa a mensagem recebida
             printf("%s\n", client_message);
-            Ler(client_message); // Supondo que Ler seja uma função definida por você
+            //Ler(client_message); // Supondo que Ler seja uma função definida por você
+            Ler_SAPI(client_message); // Supondo que Ler seja uma função definida por você
             memset(client_message, '\0', sizeof(client_message));
         }
 
