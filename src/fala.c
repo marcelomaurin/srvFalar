@@ -2,7 +2,8 @@
 Criado por Marcelo Maurin Martins
 Data: 30/01/2014
 */
- 
+
+#include <stdlib.h>
 #include<stdio.h>
 #include<string.h>    //strlen
 #ifdef _WIN32
@@ -55,19 +56,21 @@ void Ler(char* frase) {
 #endif
 
 #ifdef _WIN32
-void Ler(char* frase) {
-    char command[1024];
 
+void Ler(char* frase) {
+    char command[10000];
     // Constrói o comando para chamar a aplicação eSpeak com a frase
-    //c:\Program Files(x86)\eSpeak\command_line
-    snprintf(command, sizeof(command), "C:\\Program Files (x86)\\eSpeak\\command_line\\espeak.exe \"%s\"", frase);
-    printf(command);
+    snprintf(command, sizeof(command), "espeak.exe -v pt  \"%s\" ", frase);
+    printf("Comando: %s\n", command);
+
     // Executa o comando
     int result = system(command);
     if (result != 0) {
-        printf("Error executing espeak command\n");
+        printf("Erro ao executar o comando espeak\n");
     }
 }
+
+
 #endif
 
 #ifdef _LINUX
