@@ -1,6 +1,6 @@
 Package: srvfalar
 Version: 1.3
-Depends:  mysql-common, espeak, espeak-data, libespeak-dev, espeak-ng, speech-dispatcher ,orca onboard
+Depends:  mysql-common, espeak, espeak-data, libespeak-dev, espeak-ng, speech-dispatcher ,orca, onboard
 Section: eletronic
 Priority: optional
 Architecture: all
