@@ -12,6 +12,7 @@ Data: 30/01/2014
 #include <string.h>
 #include <windows.h>
 #include <sapi.h>
+#include <malloc.h>
 #pragma comment(lib, "ws2_32.lib") // Esta linha é necessária para linkar a biblioteca ws2_32.lib com o programa
 
 
@@ -33,7 +34,8 @@ typedef int (*espeakSynchronizeFunc)(void);
 #include<sys/socket.h>
 #include<arpa/inet.h> //inet_addr
 #include<unistd.h>    //write
-#include <espeak/speak_lib.h>
+//#include <espeak/speak_lib.h>
+#include <espeak-ng/speak_lib.h>
 #endif
 
 
@@ -140,7 +142,9 @@ int Start_Voice()
 	} else {
 		puts("Ok\n");
 	}
-	espeak_SetVoiceByName("pt");
+	espeak_SetVoiceByName("mb/mb-br1");
+	espeak_SetParameter(espeakRATE, 120,0);
+	espeak_SetParameter(espeakVOLUME, 100,0);
 	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
 	voice_spec->gender =2; //0=none 1=male, 2=female
 	voice_spec->age=0; //0=not specified, or age in years
