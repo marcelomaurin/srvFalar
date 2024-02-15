@@ -142,7 +142,7 @@ int Start_Voice()
 	} else {
 		puts("Ok\n");
 	}
-	espeak_SetVoiceByName("mb/mb-br1");
+	espeak_SetVoiceByName("mb/mb-br4");
 	espeak_SetParameter(espeakRATE, 120,0);
 	espeak_SetParameter(espeakVOLUME, 100,0);
 	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
