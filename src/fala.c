@@ -6,6 +6,7 @@ Data: 30/01/2014
 #include <stdlib.h>
 #include<stdio.h>
 #include<string.h>    //strlen
+
 #ifdef _WIN32
 #include <winsock2.h>
 #include <stdlib.h>
@@ -14,16 +15,28 @@ Data: 30/01/2014
 #include <sapi.h>
 #include <malloc.h>
 #pragma comment(lib, "ws2_32.lib") // Esta linha � necess�ria para linkar a biblioteca ws2_32.lib com o programa
+#endif
+
+//Constantes
+#define PORTSRV 8096
 
 
-// Prot�tipos das fun��es do eSpeak que ser�o usados
+//Declaração de variaveis publicas
+char sTipoVoz[50];  //Responsável pelo marcacao do tipodevoz
+
+
+// Prototipos das funcoes do eSpeak que serao usados
 typedef int (*espeakInitializeFunc)(int, int, const char*, int);
 typedef int (*espeakSetVoiceByNameFunc)(const char*);
 typedef const void* (*espeakGetCurrentVoiceFunc)(void);
 typedef int (*espeakSetVoiceByPropertiesFunc)(const void*);
 typedef int (*espeakSynchronizeFunc)(void);
 
-#endif
+void Help();
+void Initialization();
+void VariaveisDefault();
+
+
 
 #ifdef _WIN64
 #include <winsock2.h>
@@ -39,8 +52,22 @@ typedef int (*espeakSynchronizeFunc)(void);
 #endif
 
 
+void VariaveisDefault()
+{
+   strcpy(sTipoVoz, "mb/mb-br4");
+}
 
-#define PORTSRV 8096
+//Inicialização de variaveis
+void Initialization()
+{
+ //Inicialização de variaveis
+ memset(sTipoVoz,'\0',sizeof(sTipoVoz));
+
+ //Variaveis Default
+ VariaveisDefault();
+
+
+}
 
 #ifdef _LINUX
 int socket_desc, client_sock, c, read_size;
@@ -142,7 +169,9 @@ int Start_Voice()
 	} else {
 		puts("Ok\n");
 	}
-	espeak_SetVoiceByName("mb/mb-br4");
+
+        //"mb/mb-br4"
+	espeak_SetVoiceByName(sTipoVoz);
 	espeak_SetParameter(espeakRATE, 120,0);
 	espeak_SetParameter(espeakVOLUME, 100,0);
 	espeak_VOICE *voice_spec=espeak_GetCurrentVoice();
@@ -166,10 +195,11 @@ int controlesocket_windows32() {
 
     // Inicializa o subsistema de sockets do Windows
     printf("\nInitialising Winsock...");
-    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0) {
+    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+    {
         printf("Failed. Error Code : %d", WSAGetLastError());
         return 1;
-}
+    }
     printf("Initialised.\n");
 
     // Cria o socket
@@ -248,6 +278,8 @@ int controlesocket_windows64()
 }
 #endif
 
+
+
 #ifdef _LINUX
 int controlesocket_linux()
 {
@@ -317,8 +349,55 @@ int controlesocket_linux()
 }
 #endif
 
+
+void Help()
+{
+     printf("Server Falar \n\n");
+     printf("Develop by Marcelo Maurin Martins \n");
+     printf("Options:  \n");
+     printf(" -h Help \n");
+     printf(" -p pitch [value]  \n");
+     printf(" -v voice type [0-5]  \n");
+     printf("  \n\n");
+
+     exit(0);
+
+}
+
+
+#ifdef _LINUX
+void setparametros(int argc, char *argv[]) {
+    int opt;
+    while ((opt = getopt(argc, argv, "hpv:")) != -1) {
+        switch (opt) {
+            case 'h':
+                //printf("Opção -h selecionada\n");
+                Help();
+
+                break;
+            case 'p':
+                printf("Opção -p selecionada com o valor: %s\n", optarg);
+                break;
+            case 'v':
+                printf("Opção -v selecionada com o valor: %s\n", optarg);
+                break;
+
+            default: /* '?' */
+                fprintf(stderr, "Uso: %s [-v] [-h] [-c valor]\n", argv[0]);
+                exit(EXIT_FAILURE);
+        }
+    }
+}
+#endif
+
+
+
 int main(int argc , char *argv[])
 {
+#ifdef _LINUX
+    // Chamar a função setparametros
+    setparametros(argc, argv);
+#endif
 
     Start_Voice();
      
