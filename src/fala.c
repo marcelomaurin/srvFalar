@@ -60,6 +60,9 @@ void VariaveisDefault()
 //Inicialização de variaveis
 void Initialization()
 {
+ printf("Server Falar \n");
+ printf("Develop by Marcelo Maurin Martins \n\n");
+
  //Inicialização de variaveis
  memset(sTipoVoz,'\0',sizeof(sTipoVoz));
 
@@ -167,7 +170,7 @@ int Start_Voice()
 		puts("could not initialize espeak\n");
 		return -1;
 	} else {
-		puts("Ok\n");
+		puts("Inicialization voice espeak - ok!\n");
 	}
 
         //"mb/mb-br4"
@@ -352,8 +355,6 @@ int controlesocket_linux()
 
 void Help()
 {
-     printf("Server Falar \n\n");
-     printf("Develop by Marcelo Maurin Martins \n");
      printf("Options:  \n");
      printf(" -h Help \n");
      printf(" -p pitch [value]  \n");
@@ -394,6 +395,8 @@ void setparametros(int argc, char *argv[]) {
 
 int main(int argc , char *argv[])
 {
+    //Inicializa�ao	
+    Initialization();
 #ifdef _LINUX
     // Chamar a função setparametros
     setparametros(argc, argv);
