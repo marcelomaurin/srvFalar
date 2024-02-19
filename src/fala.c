@@ -335,6 +335,7 @@ int controlesocket_linux()
             //Send the message back to client
             //write(client_sock , client_message , strlen(client_message));
             //printf(client_message);
+            client_message[read_size] = '\0';
             Ler(client_message);
             memset(client_message, '\0', sizeof(client_message));
         }
