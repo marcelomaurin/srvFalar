@@ -2,7 +2,29 @@
 
 set -e
 
+# Define o diretório de origem dos arquivos
+source_dir="/etc/speech-dispatcher"
+
+
+# Copia os arquivos para o sistema
+Modificar() {
+    systemctl stop speech-dispatcher 
+    rm -rf "$source_dir/speechd_old.conf" 
+    cp -rf "$source_dir/speechd.conf" "$source_dir/speechd_old.conf" 
+    cp -rf "$source_dir/speechd_new.conf" "$source_dir/speechd.conf" 
+    systemctl start speech-dispatcher
+}
+
+
+
+#Modifica arquivos
+Modificar
+
+
+
 #reativando o systemctrl
 systemctl daemon-reload
 systemctl start srvfalar
+
+#exit 0
 

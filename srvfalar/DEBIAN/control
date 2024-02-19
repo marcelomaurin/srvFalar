@@ -1,6 +1,6 @@
 Package: srvfalar
 Version: 1.3
-Depends:  espeak, espeak-data, libespeak-dev, espeak-ng, speech-dispatcher ,orca, onboard, ffmpeg, libnotify, python2-notify, perl-libwww, perl-www-mechanize, perl-html-tree, sox ,fmt, lame, perl-www-curl, libttspico-utils, libttspico-dev
+Depends:  espeak, espeak-data, libespeak-dev, espeak-ng, speech-dispatcher ,orca, onboard, ffmpeg, libnotify-bin, libnotify-dev, python3-notify2, sox ,lame, libttspico-utils, libttspico-dev, mbrola-br1, mbrola-br2, mbrola-br3, mbrola-br4
 Description: Server TTS (Text to Speech) , need client toolfalar or similar.
 Section: eletronic
 Priority: optional
