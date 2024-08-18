@@ -1,0 +1,2 @@
+﻿fala.obj : error LNK2019: símbolo externo não resolvido, controlesocket_windows32, referenciado na função main
+D:\projetos\maurinsoft\srvFalar\src\x64\Release\srvFalar.exe : fatal error LNK1120: 1 externo não resolvidos

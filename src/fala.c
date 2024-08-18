@@ -7,7 +7,19 @@ Data: 30/01/2014
 #include<stdio.h>
 #include<string.h>    //strlen
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(_WIN64)
+#include <winsock2.h>
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+#include <sapi.h>
+//#include <sphelper.h>
+#include <malloc.h>
+#pragma comment(lib, "ws2_32.lib") // Esta linha é necessária para linkar a biblioteca ws2_32.lib com o programa
+#pragma comment(lib, "sapi.lib")
+#endif
+
+#ifdef _WIN64 && !defined(_WIN32)
 #include <winsock2.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,6 +27,9 @@ Data: 30/01/2014
 #include <sapi.h>
 #include <malloc.h>
 #pragma comment(lib, "ws2_32.lib") // Esta linha é necessária para linkar a biblioteca ws2_32.lib com o programa
+#pragma comment(lib, "sapi.lib")
+
+
 #endif
 
 //Constantes
@@ -32,15 +47,36 @@ typedef const void* (*espeakGetCurrentVoiceFunc)(void);
 typedef int (*espeakSetVoiceByPropertiesFunc)(const void*);
 typedef int (*espeakSynchronizeFunc)(void);
 
+
+#ifdef _WIN32 && !defined(_WIN64)
+int controlesocket_windows32();
+#endif
+
+#ifdef _WIN64 && !defined(_WIN32)
+int controlesocket_windows64();
+#endif
+
+#ifdef _LINUX 
+int controlesocket_linux();
+#endif
+
+
 void Help();
 void Initialization();
 void VariaveisDefault();
 
 
 
-#ifdef _WIN64
+#ifdef _WIN64 && !defined(_WIN32)
 #include <winsock2.h>
 #pragma comment(lib, "ws2_32.lib") // Esta linha é necessária para linkar a biblioteca ws2_32.lib com o programa,
+#endif
+
+#if defined(_WIN32) && !defined(_WIN64)
+#include <winsock2.h>
+#pragma comment(lib, "ws2_32.lib") // Esta linha é necessária para linkar a biblioteca ws2_32.lib com o programa,
+#pragma comment(lib, "sapi.lib")
+
 #endif
 
 #ifdef _LINUX
@@ -51,11 +87,94 @@ void VariaveisDefault();
 #include <espeak-ng/speak_lib.h>
 #endif
 
-
+#ifdef _LINUX
 void VariaveisDefault()
 {
-   strcpy(sTipoVoz, "mb/mb-br4");
+    strcpy(sTipoVoz, "mb/mb-br4");
 }
+#endif
+
+#if defined(_WIN32) && !defined(_WIN64)
+void VariaveisDefault()
+{
+}
+#endif
+
+#ifdef _WIN64 && !defined(_WIN32)
+void VariaveisDefault()
+{
+}
+#endif
+
+
+#if defined(_WIN32) && !defined(_WIN64)
+void SetVoice(ISpVoice* pVoice, const wchar_t* voiceName) 
+{
+    /*
+    IEnumSpObjectTokens* pEnum = NULL;
+    ISpObjectToken* pToken = NULL;
+    CComPtr <IEnumSpObjectTokens>	cpEnum;
+    ULONG fetched = 0;
+    BOOL found = FALSE;
+    HRESULT				hr = S_OK;
+    
+    hr = SpEnumTokens(SPCAT_VOICES, voiceName, NULL, &cpEnum;);
+    if (SUCCEEDED(hr))
+    {
+        hr = cpEnum->Next(1, &cpToken; , NULL);
+    }
+
+    //set the voice
+    if (SUCCEEDED(hr))
+    {
+        hr = cpVoice->SetVoice(cpToken);
+    }
+
+    //set the output to the default audio device
+    if (SUCCEEDED(hr))
+    {
+        hr = cpVoice->SetOutput(NULL, TRUE);
+    }
+    */
+    
+}
+
+#endif
+
+#if defined(_WIN64) && !defined(_WIN32)
+void SetVoice(ISpVoice* pVoice, const wchar_t* voiceName)
+{
+    /*
+    IEnumSpObjectTokens* pEnum = NULL;
+    ISpObjectToken* pToken = NULL;
+    ULONG fetched = 0;
+    BOOL found = FALSE;
+
+    // Enumerar as vozes disponíveis
+    HRESULT hr = SpEnumTokens(SPCAT_VOICES, NULL, NULL, &pEnum);
+    if (SUCCEEDED(hr)) {
+        while (pEnum->lpVtbl->Next(pEnum, 1, &pToken, &fetched) == S_OK) {
+            WCHAR* pName = NULL;
+            // Obter o nome da voz
+            hr = SpGetDescription(pToken, &pName);
+            if (SUCCEEDED(hr)) {
+                // Comparar com o nome desejado
+                if (wcscmp(pName, voiceName) == 0) {
+                    pVoice->lpVtbl->SetVoice(pVoice, pToken);
+                    found = TRUE;
+                }
+                CoTaskMemFree(pName);
+            }
+            pToken->lpVtbl->Release(pToken);
+            if (found) break;
+        }
+        pEnum->lpVtbl->Release(pEnum);
+    }
+    */
+}
+
+#endif
+
 
 //InicializaÃ§Ã£o de variaveis
 void Initialization()
@@ -83,14 +202,54 @@ char client_message[2000];
 espeak_AUDIO_OUTPUT output;
 #endif
 
-#ifdef _WIN64
+#ifdef _WIN64 && !defined(_WIN32)
 void Ler(char* frase) {
 
 }
 #endif
 
-#ifdef _WIN32
-void Ler_SAPI(char* frase) {
+#if defined(_WIN32) && !defined(_WIN64)
+void Ler_SAPI(char* frase) 
+{
+        // Inicializar a COM
+        CoInitialize(NULL);
+
+        ISpVoice* pVoice = NULL;
+
+        // Criar uma instância da interface ISpVoice
+        CoCreateInstance(&CLSID_SpVoice, NULL, CLSCTX_ALL, &IID_ISpVoice, (void**)&pVoice);
+
+        // Definir a voz para "Microsoft Maria"
+        SetVoice(pVoice, L"Microsoft Daniel");
+        //SetVoice(pVoice, L"Microsoft Maria");
+
+
+        // Converter a string para wide string (wchar_t*)
+        int wstr_size = MultiByteToWideChar(CP_UTF8, 0, frase, -1, NULL, 0);
+        wchar_t* wfrase = (wchar_t*)malloc(wstr_size * sizeof(wchar_t));
+        MultiByteToWideChar(CP_UTF8, 0, frase, -1, wfrase, wstr_size);
+
+        // Converter o texto para fala
+        pVoice->lpVtbl->Speak(pVoice, wfrase, 0, NULL);
+
+        // Aguardar a conclusão da fala
+        SPVOICESTATUS status;
+        pVoice->lpVtbl->GetStatus(pVoice, &status, NULL);
+        while (status.dwRunningState == SPRS_IS_SPEAKING) {
+            Sleep(100);
+            pVoice->lpVtbl->GetStatus(pVoice, &status, NULL);
+        }
+
+        // Liberar recursos
+        pVoice->lpVtbl->Release(pVoice);
+        CoUninitialize();
+
+}
+#endif
+
+#ifdef _WIN64 && !defined(_WIN32)
+void Ler_SAPI(char* frase)
+{
     // Inicializar a COM
     CoInitialize(NULL);
 
@@ -98,6 +257,10 @@ void Ler_SAPI(char* frase) {
 
     // Criar uma instância da interface ISpVoice
     CoCreateInstance(&CLSID_SpVoice, NULL, CLSCTX_ALL, &IID_ISpVoice, (void**)&pVoice);
+
+    // Definir a voz para "Microsoft Maria"
+    //SetVoice(pVoice, L"Microsoft Daniel");
+    //SetVoice(pVoice, L"Microsoft Maria");
 
     // Converter a string para wide string (wchar_t*)
     int wstr_size = MultiByteToWideChar(CP_UTF8, 0, frase, -1, NULL, 0);
@@ -119,8 +282,11 @@ void Ler_SAPI(char* frase) {
     pVoice->lpVtbl->Release(pVoice);
     CoUninitialize();
 }
+#endif
 
-void Ler(char* frase) {
+
+
+void LereSpeak(char* frase) {
     char command[10000];
     // Constrói o comando para chamar a aplicação eSpeak com a frase
     snprintf(command, sizeof(command), "espeak.exe -v pt  \"%s\" ", frase);
@@ -132,7 +298,7 @@ void Ler(char* frase) {
         printf("Erro ao executar o comando espeak\n");
     }
 }
-#endif
+
 
 #ifdef _LINUX
 void Ler(char * frase) {
@@ -144,14 +310,14 @@ void Ler(char * frase) {
 }
 #endif
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(_WIN64)
 int Start_Voice() {
 
     return 0;
 }
 #endif
 
-#ifdef _WIN64 
+#ifdef _WIN64
 int Start_Voice()
 {
     return 0;
@@ -188,7 +354,7 @@ int Start_Voice()
 }
 #endif
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(_WIN64)
 int controlesocket_windows32() {
     WSADATA wsa;
     SOCKET socket_desc, client_sock;
@@ -274,11 +440,92 @@ int controlesocket_windows32() {
 }
 #endif
 
-#ifdef _WIN64
-int controlesocket_windows64()
-{
-  return 0;
+#ifdef _WIN64 && !defined(_WIN32)
+
+int controlesocket_windows64() {
+    WSADATA wsa;
+    SOCKET socket_desc, client_sock;
+    struct sockaddr_in server, client;
+    int c, read_size;
+    char client_message[2000];
+
+    // Inicializa o subsistema de sockets do Windows
+    printf("\nInitialising Winsock...");
+    if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+    {
+        printf("Failed. Error Code : %d", WSAGetLastError());
+        return 1;
+    }
+    printf("Initialised.\n");
+
+    // Cria o socket
+    socket_desc = socket(AF_INET, SOCK_STREAM, 0);
+    if (socket_desc == INVALID_SOCKET) {
+        printf("Could not create socket : %d", WSAGetLastError());
+        WSACleanup();
+        return 1;
+    }
+    puts("Socket created");
+
+    // Prepara a estrutura sockaddr_in
+    server.sin_family = AF_INET;
+    server.sin_addr.s_addr = INADDR_ANY;
+    server.sin_port = htons(PORTSRV);
+
+    // Bind
+    if (bind(socket_desc, (struct sockaddr*)&server, sizeof(server)) == SOCKET_ERROR) {
+        printf("Bind failed with error code : %d", WSAGetLastError());
+        closesocket(socket_desc);
+        WSACleanup();
+        return 1;
+    }
+    puts("Bind done");
+
+    int flgAtivo = 1;
+    while (flgAtivo == 1) {
+        // Ouve por conexões
+        listen(socket_desc, 3);
+
+        // Aceita conexões entrantes
+        puts("Waiting for incoming connections...");
+        c = sizeof(struct sockaddr_in);
+
+        client_sock = accept(socket_desc, (struct sockaddr*)&client, &c);
+        if (client_sock == INVALID_SOCKET) {
+            printf("accept failed with error code : %d", WSAGetLastError());
+            closesocket(socket_desc);
+            WSACleanup();
+            return 1;
+        }
+        puts("Connection accepted");
+
+        memset(client_message, '\0', sizeof(client_message));
+
+        // Recebe mensagem do cliente
+        while ((read_size = recv(client_sock, client_message, 2000, 0)) > 0) {
+            // Processa a mensagem recebida
+            printf("%s\n", client_message);
+            //Ler(client_message); // Supondo que Ler seja uma função definida por você
+            Ler_SAPI(client_message); // Supondo que Ler seja uma função definida por você
+            memset(client_message, '\0', sizeof(client_message));
+        }
+
+        if (read_size == 0) {
+            puts("Client disconnected");
+            fflush(stdout);
+        }
+        else if (read_size == -1) {
+            printf("recv failed with error code : %d", WSAGetLastError());
+        }
+
+        closesocket(client_sock);
 }
+
+    closesocket(socket_desc);
+    WSACleanup(); // Limpa o subsistema de sockets
+    return 0;
+}
+
 #endif
 
 
@@ -405,11 +652,11 @@ int main(int argc , char *argv[])
 
     Start_Voice();
      
-    #ifdef _WIN32
+    #ifdef _WIN32 && !defined(_WIN64)
     controlesocket_windows32();
     #endif
-
-    #ifdef _WIN64
+    
+    #ifdef _WIN64 && !defined(_WIN32)   
     controlesocket_windows64();
     #endif
 

@@ -1,0 +1,13 @@
+﻿  fala.c
+D:\projetos\maurinsoft\srvFalar\src\fala.c(22,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+D:\projetos\maurinsoft\srvFalar\src\fala.c(51,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+D:\projetos\maurinsoft\srvFalar\src\fala.c(55,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+D:\projetos\maurinsoft\srvFalar\src\fala.c(70,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+D:\projetos\maurinsoft\srvFalar\src\fala.c(103,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+D:\projetos\maurinsoft\srvFalar\src\fala.c(205,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+D:\projetos\maurinsoft\srvFalar\src\fala.c(250,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+D:\projetos\maurinsoft\srvFalar\src\fala.c(443,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+D:\projetos\maurinsoft\srvFalar\src\fala.c(655,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+D:\projetos\maurinsoft\srvFalar\src\fala.c(659,1): warning C4067: tokens inesperados após diretiva de pré-processador - esperado um newline
+LINK : warning LNK4075: ignorando '/INCREMENTAL' devido a especificação '/OPT:ICF'
+  srvFalar.vcxproj -> D:\projetos\maurinsoft\srvFalar\src\Release\srvFalar.exe
