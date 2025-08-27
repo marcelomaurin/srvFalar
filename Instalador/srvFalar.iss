@@ -23,9 +23,9 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\srvfalar
 DisableProgramGroupPage=yes
-OutputDir=C:\Users\marcelo.maurin\Desktop\projetos\srvFalar\bin
-OutputBaseFilename=srvFalar_1.3
-SetupIconFile=C:\Users\marcelo.maurin\Desktop\projetos\srvFalar\src\srvfalar.ico
+OutputDir=D:\projetos\maurinsoft\srvFalar\bin
+OutputBaseFilename=srvFalar_1.4
+SetupIconFile=D:\projetos\maurinsoft\srvFalar\src\srvfalar.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -37,9 +37,9 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\marcelo.maurin\Desktop\projetos\srvFalar\src\Debug\srvfalar.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\marcelo.maurin\Desktop\projetos\srvFalar\src\*.c"; DestDir: "{app}\source\gcc\"; Flags: ignoreversion
-Source: "C:\Users\marcelo.maurin\Desktop\projetos\srvFalar\externo\setup_espeak-1.48.04.exe"; DestDir: "{app}\tools\"; Flags: ignoreversion
+Source: "D:\projetos\maurinsoft\srvFalar\srvfalar.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\projetos\maurinsoft\srvFalar\src\*.c"; DestDir: "{app}\source\gcc\"; Flags: ignoreversion
+;Source: "D:\projetos\maurinsoft\srvFalar\externo\setup_espeak-1.48.04.exe"; DestDir: "{app}\tools\"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -47,7 +47,7 @@ Name: "{commonprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\tools\setup_espeak-1.48.04.exe"; Description: "{cm:LaunchProgram,{#StringChange("Espeak", '&', '&&')}}"; Flags: nowait postinstall skipifsilent  runascurrentuser 
+;Filename: "{app}\tools\setup_espeak-1.48.04.exe"; Description: "{cm:LaunchProgram,{#StringChange("Espeak", '&', '&&')}}"; Flags: nowait postinstall skipifsilent  runascurrentuser 
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent  runascurrentuser 
 
 
